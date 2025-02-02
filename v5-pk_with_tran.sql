@@ -4,6 +4,7 @@
  */
 
 -- change item
+BEGIN;
 ALTER TABLE orders
     ADD COLUMN item_name VARCHAR(50) REFERENCES item (name);
 
@@ -91,7 +92,9 @@ ALTER TABLE orders
     DROP COLUMN orderid;
 ALTER TABLE orders
     ADD PRIMARY KEY (item_name, customers_email, point_name);
+COMMIT;
 
+BEGIN;
 -- rollback consultant_pick_up_point
 ALTER TABLE consultant_pick_up_point
     DROP CONSTRAINT consultant_pick_up_point_pkey;
@@ -187,4 +190,4 @@ ALTER TABLE pick_up_point
 -- rollback consultant_pick_up_point 2 part
 ALTER TABLE consultant_pick_up_point
     ADD PRIMARY KEY (consultantid, pointid);
-
+COMMIT;
